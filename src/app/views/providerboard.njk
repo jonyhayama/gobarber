@@ -1,0 +1,29 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div class="content">
+    <strong>Howdy, {{user.name}}</strong>
+
+    {% if appointments | length %}
+      <p>Check out your appointments for today</p>
+    {% else %}
+      <p>No appointments for today :(</p>
+    {% endif %}
+
+    {% for appointment in appointments %}
+      <li class="provider">
+        <div>
+          <img src="/files/{{appointment.user.avatar}}" />
+          <div>
+            <strong>{{appointment.user.name}}</strong>
+            <br/><small>{{ appointment.date | newDate | date('tz', 'America/Sao_Paulo') | date("HH:mm") }}</small>
+          </div>
+        </div>
+
+        <a href="mailto:{{appointment.user.email}}"><i class="far fa-envelope"></i></a>
+      </li>
+    {% endfor %}
+
+    <a href="/app/logout" class="logout">Logout</a>
+  </div>
+{% endblock %}
